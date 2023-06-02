@@ -1,0 +1,102 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Database Connection</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Add Student's Data</h1>
+      <form method="POST" action="/submit" class="form">
+        <input
+          required
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Name"
+          class="input"
+        />
+        <input
+          required
+          type="date"
+          name="dob"
+          id="dob"
+          placeholder="Date of Birth"
+          class="input"
+        />
+        <input
+          required
+          type="text"
+          name="address"
+          id="address"
+          placeholder="Address"
+          class="input"
+        />
+        <input
+          required
+          type="text"
+          name="phone"
+          id="phone"
+          placeholder="Phone"
+          class="input"
+        />
+        <input
+          required
+          type="text"
+          name="faculty"
+          id="faculty"
+          placeholder="Faculty"
+          class="input"
+        />
+        <button type="submit" class="button">Submit</button>
+      </form>
+      <div id="data-table">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>DOB</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Faculty</th>
+            </tr>
+          </thead>
+          <tbody id="table_body"></tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      const fetchdata = async () => {
+        const res = await fetch("/data");
+        const data = await res.json();
+        create_table(data);
+      };
+      fetchdata();
+      const create_table = (data) => {
+        const table_body = document.getElementById("table_body");
+        table_body.innerHTML = "";
+        data.forEach((element) => {
+          const tr = document.createElement("tr");
+          const td_name = document.createElement("td");
+          const td_dob = document.createElement("td");
+          const td_address = document.createElement("td");
+          const td_phone = document.createElement("td");
+          const td_faculty = document.createElement("td");
+          td_name.innerHTML = element.name;
+          td_dob.innerHTML = element.dob;
+          td_address.innerHTML = element.address;
+          td_phone.innerHTML = element.phone;
+          td_faculty.innerHTML = element.faculty;
+          tr.appendChild(td_name);
+          tr.appendChild(td_dob);
+          tr.appendChild(td_address);
+          tr.appendChild(td_phone);
+          tr.appendChild(td_faculty);
+          table_body.appendChild(tr);
+        });
+      };
+    </script>
+  </body>
+</html>
