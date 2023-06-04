@@ -1,5 +1,6 @@
 var pg = require("pg");
 
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -11,8 +12,7 @@ app.use(express.static("public"));
 const port = 5500;
 
 //db connection
-var conString =
-  "postgres://sispycqu:aEU6aj5rj5ug2eKww7itHLxh3Cyx9plU@lucky.db.elephantsql.com/sispycqu"; //Can be found in the Details page
+var conString = process.env.PG_KEY;
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
